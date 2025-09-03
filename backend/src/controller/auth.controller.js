@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 async function registerUser(req, res) {
   const { fullName, email, password } = req.body;
-  const isUserAlreadyExist = await userModel.findOne({email});
+  const isUserAlreadyExist = await userModel.findOne({ email });
   if (isUserAlreadyExist) {
     return res.status(400).json({
       message: "user already exists",
@@ -12,7 +12,7 @@ async function registerUser(req, res) {
   }
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const user =await userModel.create({
+  const user = await userModel.create({
     fullName,
     email,
     password: hashedPassword,
@@ -22,7 +22,7 @@ async function registerUser(req, res) {
     {
       id: user._id,
     },
-    "d5ebd14aa1437c48a6b7bd2b9be9b1f1"
+   process.env.JWT_SECRET
   );
 
   res.cookie("token", token);
@@ -37,6 +37,44 @@ async function registerUser(req, res) {
   });
 }
 
-module.exports = {
-    registerUser
+async function loginUser(req, res) {
+  const { email, password } = req.body;
+
+  const user = await userModel.findOne({ email });
+
+  if (!user) {
+    return res.status(400).json({
+      message: "invald email or password",
+    });
+  }
+
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+
+  if (!isPasswordValid) {
+    return res.status(400).json({
+      message: "invald email or password",
+    });
+  }
+  const token = jwt.sign(
+    {
+      id: user._id,
+    },
+    process.env.JWT_SECRET
+  );
+
+  res.cookie("token", token);
+
+  res.status(200).json({
+    message: "user logged in successfully",
+    user: {
+      _id: user._id,
+      email: user.email,
+      fullName: user.fullName,
+    },
+  });
 }
+
+module.exports = {
+  registerUser,
+  loginUser,
+};

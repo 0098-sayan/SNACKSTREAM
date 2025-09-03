@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 function connectdb() {
   mongoose
-    .connect("mongodb://localhost:27017/snackstream")
+    .connect(process.env.MONGODB_URI)
     .then(() => {
       console.log("Mongodb connected Successfully");
     })
