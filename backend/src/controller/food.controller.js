@@ -22,4 +22,12 @@ async function createFood(req, res) {
   res.send("food item created");
 }
 
-module.exports = { createFood };
+async function getFoodItems(req,res){
+const fooditems = await foodModel.find({})
+res.status(200).json({
+  message:"food feched successfully",
+  fooditems
+})
+}
+
+module.exports = { createFood,getFoodItems };
