@@ -1,4 +1,5 @@
 const foodPartnerModel = require("../models/foodpartner.model");
+const userModel = require("../models/user.model")
 const jwt = require("jsonwebtoken");
 
 async function authFoodPartnerMiddleware(req, res, next) {
@@ -22,5 +23,8 @@ async function authFoodPartnerMiddleware(req, res, next) {
     });
   }
 }
+async function authUserMiddleware(req, res, next) {
 
-module.exports = { authFoodPartnerMiddleware };
+}
+
+module.exports = { authFoodPartnerMiddleware,authUserMiddleware };
