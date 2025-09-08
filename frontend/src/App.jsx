@@ -1,9 +1,12 @@
 import React from 'react'
+import UserLogin from './pages/auth/UserLogin'
+import UserRegister from './pages/auth/UserRegister'
 
 function App() {
   return (
     <div>
-      <h1 className='bg-red-600 font-bold uppercase text-5xl flex items-center justify-center'>Hello world</h1>
+    <UserLogin/>
+    <UserRegister/>
     </div>
   )
 }
