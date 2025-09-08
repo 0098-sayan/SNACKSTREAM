@@ -1,6 +1,30 @@
 import React from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const UserRegister = () => {
+  const navigate = useNavigate();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const fullname = e.target.fullname.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    axios.post("http://localhost:3000/api/auth/user/register", {
+      fullname,
+      email,
+      password
+    }, { withCredentials: true })
+      .then((response) => {
+        console.log("Registration successful:", response.data);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error("Registration failed:", error);
+      });
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
       <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md w-full max-w-sm">
@@ -8,7 +32,7 @@ const UserRegister = () => {
           Register
         </h2>
         
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="fullname" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Full Name

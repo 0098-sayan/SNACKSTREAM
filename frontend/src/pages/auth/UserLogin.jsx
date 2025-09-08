@@ -1,6 +1,31 @@
 import React from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const LoginUser = () => {
+const UserLogin = () => {
+  const navigate = useNavigate();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    axios.post(
+      "http://localhost:3000/api/auth/user/login",
+      {
+        email,
+        password,
+      },
+      { withCredentials: true }
+    )
+      .then((response) => {
+        console.log("Login successful:", response.data);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error("Login failed:", error);
+      });
+  };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
       <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md w-full max-w-sm">
@@ -8,7 +33,7 @@ const LoginUser = () => {
           Login
         </h2>
 
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label
               htmlFor="email"
@@ -18,7 +43,6 @@ const LoginUser = () => {
             </label>
             <input
               type="email"
-              id="email"
               name="email"
               className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
               placeholder="Enter your email"
@@ -34,7 +58,6 @@ const LoginUser = () => {
             </label>
             <input
               type="password"
-              id="password"
               name="password"
               className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
               placeholder="Enter your password"
@@ -63,4 +86,4 @@ const LoginUser = () => {
   );
 };
 
-export default LoginUser;
+export default UserLogin;
