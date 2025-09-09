@@ -1,14 +1,12 @@
-import React from 'react'
-import UserLogin from './pages/auth/UserLogin'
-import UserRegister from './pages/auth/UserRegister'
+import React from "react";
+import AppRoutes from "./routes/AppRoutes";
 
 function App() {
   return (
-    <div>
-    <UserLogin/>
-    <UserRegister/>
-    </div>
-  )
+    <>
+      <AppRoutes />
+    </>
+  );
 }
 
-export default App
+export default App;
