@@ -5,6 +5,11 @@ import UserLogin from '../pages/auth/UserLogin';
 import ChooseRegister from '../pages/auth/ChooseRegister';
 import FoodPartnerRegister from '../pages/auth/FoodPartnerRegister';
 import FoodPartnerLogin from '../pages/auth/FoodPartnerLogin';
+import Home from '../pages/general/Home';
+import BottomNav from '../components/BottomNav';
+import Saved from '../pages/general/Saved';
+import CreateFood from '../pages/food-partner/CreateFood';
+import Profile from '../pages/food-partner/Profile';
 
 function AppRoutes() {
   return (
